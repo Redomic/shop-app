@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class CartItem {
   final String id;
   final String title;
@@ -23,6 +24,14 @@ class Cart with ChangeNotifier {
 
   int get itemCount {
     return _items.length;
+  }
+
+  double get totalPrice {
+    var total = 0.0;
+    _items.forEach((key, cartItem) {
+      total += cartItem.price * cartItem.quantity;
+    });
+    return total;
   }
 
   void addItem(String productId, double price, String title) {
