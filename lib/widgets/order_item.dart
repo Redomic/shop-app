@@ -42,8 +42,7 @@ class _OrderItemState extends State<OrderItem> {
               child: ListView(
                 children: widget.order.products
                     .map(
-                      (prod) =>
-                      Row(
+                      (prod) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -62,7 +61,7 @@ class _OrderItemState extends State<OrderItem> {
                           ),
                         ],
                       ),
-                )
+                    )
                     .toList(),
               ),
             ),
