@@ -68,11 +68,10 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     final url = Uri.parse(
         'https://shop-app-3be3b-default-rtdb.asia-southeast1.firebasedatabase.app/products.json');
-    http
-        .post(
+    return http.post(
       url,
       body: json.encode({
         'title': product.title,
