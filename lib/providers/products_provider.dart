@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 
 import 'product.dart';
 
@@ -68,6 +68,7 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
+
     final newProduct = Product(
       title: product.title,
       description: product.description,
