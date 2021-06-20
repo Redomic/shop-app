@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/products_provider.dart';
 
+import '../screens/edit_product_screen.dart';
+
 class UserProductItem extends StatelessWidget {
   final String title;
   final String id;
@@ -20,13 +22,13 @@ class UserProductItem extends StatelessWidget {
       trailing: Container(
         width: 100,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end, // REMOVE LATER FOR EDIT BUTTON
           children: [
-            // ADD UPDATE FUNCTIONALITY FROM LECTURE 237!!!!!
-            // IconButton(
-            //   icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
-            //   onPressed: () {},
-            // ),
+            IconButton(
+              icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
+              onPressed: () {
+                Navigator.of(context).pushNamed(EditProductScreen.routeName, arguments: id);
+              },
+            ),
             IconButton(
               icon: Icon(Icons.delete, color: Theme.of(context).errorColor,),
               onPressed: () {
