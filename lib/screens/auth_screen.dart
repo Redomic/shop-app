@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-import 'dart:math';
 
 enum AuthMode {Signup, Login}
 
@@ -9,6 +10,7 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
         children: <Widget>[],
