@@ -26,9 +26,9 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
-  Future<void> fetchAndSetOrders() async {
+  Future<void> fetchAndSetOrders(String authToken) async {
     final url = Uri.parse(
-        'https://shop-app-3be3b-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json');
+        'https://shop-app-3be3b-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json?auth=$authToken');
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body);
@@ -54,9 +54,9 @@ class Orders with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addOrder(List<CartItem> cartProducts, double total) async {
+  Future<void> addOrder(List<CartItem> cartProducts, double total, String authToken) async {
     final url = Uri.parse(
-        'https://shop-app-3be3b-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json');
+        'https://shop-app-3be3b-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json?auth=$authToken');
     final timestamp = DateTime.now();
     final response = await http.post(
       url,

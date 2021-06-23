@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show Cart;
 import '../providers/orders.dart';
+import '../providers/auth.dart';
 
 import '../widgets/cart_item.dart';
 import '../widgets/app_drawer.dart';
@@ -13,6 +14,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final auth = Provider.of<Auth>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,7 +47,7 @@ class CartScreen extends StatelessWidget {
                     ),
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
-                  OrderButton(cart: cart)
+                  OrderButton(cart: cart, auth: auth,)
                 ],
               ),
             ),
@@ -72,9 +74,11 @@ class OrderButton extends StatefulWidget {
   const OrderButton({
     Key? key,
     required this.cart,
+    required this.auth
   }) : super(key: key);
 
   final Cart cart;
+  final Auth auth;
 
   @override
   _OrderButtonState createState() => _OrderButtonState();
@@ -99,6 +103,7 @@ class _OrderButtonState extends State<OrderButton> {
               await Provider.of<Orders>(context, listen: false).addOrder(
                 widget.cart.items.values.toList(),
                 widget.cart.totalPrice,
+                widget.auth.token!,
               );
               setState(() {
                 _isLoading = false;
