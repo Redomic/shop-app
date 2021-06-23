@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Screens
 import 'screens/products_overview_screen.dart';
@@ -17,7 +18,8 @@ import 'providers/cart.dart';
 import 'providers/orders.dart';
 
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
 
