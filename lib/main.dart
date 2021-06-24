@@ -10,6 +10,7 @@ import 'screens/orders_screen.dart';
 import 'screens/user_products_screen.dart';
 import 'screens/edit_product_screen.dart';
 import 'screens/auth_screen.dart';
+import 'screens/splash_screen.dart';
 
 // Providers
 import 'providers/auth.dart';
@@ -57,29 +58,36 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ],
-      child: Consumer<Auth>(
-        builder: (ctx, authData, _) {
-          ifAuth(targetScreen) => authData.isAuth ? targetScreen : AuthScreen();
-          return MaterialApp(
-            title: 'Shopping App',
-            theme: ThemeData(
-              primarySwatch: Colors.purple,
-              accentColor: Colors.deepOrange,
-              fontFamily: 'Lato',
-            ),
-            home: authData.isAuth ? ProductsOverviewScreen() : AuthScreen(),
-            routes: {
-              ProductsOverviewScreen.routeName: (ctx) =>
-                  ProductsOverviewScreen(),
-              ProductDetailsScreen.routeName: (ctx) => ifAuth(ProductDetailsScreen()),
-              CartScreen.routeName: (ctx) => ifAuth(CartScreen()),
-              OrdersScreen.routeName: (ctx) => ifAuth(OrdersScreen()),
-              UserProductsScreen.routeName: (ctx) => ifAuth(UserProductsScreen()),
-              EditProductScreen.routeName: (ctx) => ifAuth(EditProductScreen()),
-            },
-          );
-        }
-      ),
+      child: Consumer<Auth>(builder: (ctx, authData, _) {
+        ifAuth(targetScreen) => authData.isAuth ? targetScreen : AuthScreen();
+        return MaterialApp(
+          title: 'Shopping App',
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+            accentColor: Colors.deepOrange,
+            fontFamily: 'Lato',
+          ),
+          home: authData.isAuth
+              ? ProductsOverviewScreen()
+              : FutureBuilder(
+                  future: authData.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
+          routes: {
+            ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
+            ProductDetailsScreen.routeName: (ctx) =>
+                ifAuth(ProductDetailsScreen()),
+            CartScreen.routeName: (ctx) => ifAuth(CartScreen()),
+            OrdersScreen.routeName: (ctx) => ifAuth(OrdersScreen()),
+            UserProductsScreen.routeName: (ctx) => ifAuth(UserProductsScreen()),
+            EditProductScreen.routeName: (ctx) => ifAuth(EditProductScreen()),
+          },
+        );
+      }),
     );
   }
 }

@@ -99,6 +99,12 @@ class AuthCard extends StatefulWidget {
 }
 
 class _AuthCardState extends State<AuthCard> {
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
   final GlobalKey<FormState> _formKey = GlobalKey();
   AuthMode _authMode = AuthMode.Login;
   Map<String, String> _authData = {
