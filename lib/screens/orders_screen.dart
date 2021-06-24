@@ -23,7 +23,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       setState(() {
         _isLoading = true;
       });
-      final token = Provider.of<Auth>(context, listen: false).token!;
+      final token = Provider.of<Auth>(context, listen: false).token;
       await Provider.of<Orders>(context, listen: false).fetchAndSetOrders(token);
       setState(() {
         _isLoading = false;

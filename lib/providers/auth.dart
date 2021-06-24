@@ -8,19 +8,23 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/http_exception.dart';
 
 class Auth with ChangeNotifier {
-  String? _token;
-  DateTime? _expiryDate;
-  String? _userId;
+  late String _token;
+  DateTime _expiryDate = DateTime.now();
+  late String _userId;
 
   bool get isAuth {
-    return token != null;
+    return token != '';
   }
 
-  String? get token {
-    if (_expiryDate != null && _expiryDate!.isAfter(DateTime.now()) && _token != null) {
+  String get token {
+    if (_expiryDate.isAfter(DateTime.now()) && _token != '') {
       return _token;
     }
-    return null;
+    return '';
+  }
+
+  String get userId {
+    return _userId;
   }
 
   Future<void> signup(String email, String password) async {

@@ -37,12 +37,14 @@ class ProductItem extends StatelessWidget {
                 product.isFavorite ? Icons.favorite : Icons.favorite_border),
             onPressed: () async {
               try {
-                await product.toggleFavoriteStatus(auth.token!);
+                await product.toggleFavoriteStatus(
+                  auth.token,
+                  auth.userId,
+                );
               } catch (error) {
                 scaffoldMessenger.hideCurrentSnackBar();
-                scaffoldMessenger.showSnackBar(
-                  SnackBar(content: Text('An error occurred'))
-                );
+                scaffoldMessenger
+                    .showSnackBar(SnackBar(content: Text('$error')));
               }
             },
             color: Theme.of(context).accentColor,
