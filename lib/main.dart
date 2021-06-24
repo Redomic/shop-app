@@ -58,23 +58,27 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Consumer<Auth>(
-        builder: (ctx, authData, _) => MaterialApp(
-          title: 'Shopping App',
-          theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
-            fontFamily: 'Lato',
-          ),
-          home: authData.isAuth ? ProductsOverviewScreen() : AuthScreen(),
-          routes: {
-            ProductsOverviewScreen.routeName: (ctx) => ProductsOverviewScreen(),
-            ProductDetailsScreen.routeName: (ctx) => ProductDetailsScreen(),
-            CartScreen.routeName: (ctx) => CartScreen(),
-            OrdersScreen.routeName: (ctx) => OrdersScreen(),
-            UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
-            EditProductScreen.routeName: (ctx) => EditProductScreen(),
-          },
-        ),
+        builder: (ctx, authData, _) {
+          ifAuth(targetScreen) => authData.isAuth ? targetScreen : AuthScreen();
+          return MaterialApp(
+            title: 'Shopping App',
+            theme: ThemeData(
+              primarySwatch: Colors.purple,
+              accentColor: Colors.deepOrange,
+              fontFamily: 'Lato',
+            ),
+            home: authData.isAuth ? ProductsOverviewScreen() : AuthScreen(),
+            routes: {
+              ProductsOverviewScreen.routeName: (ctx) =>
+                  ProductsOverviewScreen(),
+              ProductDetailsScreen.routeName: (ctx) => ifAuth(ProductDetailsScreen()),
+              CartScreen.routeName: (ctx) => ifAuth(CartScreen()),
+              OrdersScreen.routeName: (ctx) => ifAuth(OrdersScreen()),
+              UserProductsScreen.routeName: (ctx) => ifAuth(UserProductsScreen()),
+              EditProductScreen.routeName: (ctx) => ifAuth(EditProductScreen()),
+            },
+          );
+        }
       ),
     );
   }

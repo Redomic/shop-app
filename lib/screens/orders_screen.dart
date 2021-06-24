@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/orders.dart' show Orders;
-import '../providers/auth.dart';
 
 import '../widgets/order_item.dart';
 import '../widgets/app_drawer.dart';
@@ -23,7 +22,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
       setState(() {
         _isLoading = true;
       });
-      final token = Provider.of<Auth>(context, listen: false).token;
       await Provider.of<Orders>(context, listen: false).fetchAndSetOrders();
       setState(() {
         _isLoading = false;
